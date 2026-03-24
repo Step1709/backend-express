@@ -14,4 +14,13 @@ router.get('/', function(req, res, next) {
   res.send(reqQuest.items);
 });
 
+router.get('/:id', function(req, res, next)  {
+    if (req.params.id <= users.length) {
+        res.send(users[req.params.id - 1]);
+    }
+    else{
+        res.status(404).send('Not Found');
+    }
+})
+
 module.exports = router;
