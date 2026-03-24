@@ -26,12 +26,15 @@ router.post('/', function(req, res, next) {
 })
 
 router.get('/:id', function(req, res, next)  {
-    if (req.params.id <= users.length) {
-        res.send(users[req.params.id - 1]);
-    }
-    else{
-        res.status(404).send('Not Found');
-    }
+    const usId = req.params.id;
+    db.all("SELECT id, name FROM users WHERE id = (?)", [usId], (err, rows) => {
+        if (rows.length > 0) {
+            res.send(rows[0]);
+        }
+        else{
+            res.status(404).send('Not Found');
+        }
+    });
 })
 
 module.exports = router;
